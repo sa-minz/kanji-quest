@@ -89,8 +89,7 @@ function App() {
 
           return {
             kanji: character,
-            meaning:
-              data.meanings?.[0] || "Unknown",
+            meaning: data.meanings?.[0] || "Unknown",
             reading:
               data.kun_readings?.[0] ||
               data.on_readings?.[0] ||
@@ -99,30 +98,25 @@ function App() {
         })
       );
 
-      const finalQuestions = questionData.map(
-        (question) => {
-          const otherQuestions = questionData.filter(
-            (item) =>
-              item.kanji !== question.kanji
-          );
+      const finalQuestions = questionData.map((question) => {
+        const otherQuestions = questionData.filter(
+          (item) => item.kanji !== question.kanji
+        );
 
-          const wrongAnswers = shuffle(
-            otherQuestions
-          )
-            .slice(0, 3)
-            .map((item) => item.meaning);
+        const wrongAnswers = shuffle(otherQuestions)
+          .slice(0, 3)
+          .map((item) => item.meaning);
 
-          const options = shuffle([
-            question.meaning,
-            ...wrongAnswers,
-          ]);
+        const options = shuffle([
+          question.meaning,
+          ...wrongAnswers,
+        ]);
 
-          return {
-            ...question,
-            options,
-          };
-        }
-      );
+        return {
+          ...question,
+          options,
+        };
+      });
 
       setQuestions(finalQuestions);
     } catch (error) {
@@ -136,8 +130,7 @@ function App() {
       return;
     }
 
-    const question =
-      questions[currentQuestion];
+    const question = questions[currentQuestion];
 
     setSelectedAnswer(answer);
 
@@ -146,9 +139,7 @@ function App() {
 
       setScore(newScore);
 
-      setStreak(
-        (previous) => previous + 1
-      );
+      setStreak((previous) => previous + 1);
 
       if (newScore > bestScore) {
         setBestScore(newScore);
@@ -163,14 +154,8 @@ function App() {
     }
 
     setTimeout(() => {
-      if (
-        currentQuestion + 1 <
-        questions.length
-      ) {
-        setCurrentQuestion(
-          (previous) => previous + 1
-        );
-
+      if (currentQuestion + 1 < questions.length) {
+        setCurrentQuestion((previous) => previous + 1);
         setSelectedAnswer(null);
       } else {
         setGameFinished(true);
@@ -179,17 +164,15 @@ function App() {
   }
 
   function speakReading() {
-    const question =
-      questions[currentQuestion];
+    const question = questions[currentQuestion];
 
     if (!question?.reading) {
       return;
     }
 
-    const speech =
-      new SpeechSynthesisUtterance(
-        question.reading
-      );
+    const speech = new SpeechSynthesisUtterance(
+      question.reading
+    );
 
     speech.lang = "ja-JP";
     speech.rate = 0.8;
@@ -222,25 +205,63 @@ function App() {
     setLoading(false);
   }
 
+  /* =========================
+     LOADING SCREEN
+  ========================= */
+
   if (loading) {
     return (
-      <div className="app">
-        <div className="game-card result-card">
-          <div className="logo">🎌</div>
+      <div className="loading-screen">
+        <div className="loading-card">
+
+          <div className="loading-sakura sakura-1">
+            🌸
+          </div>
+
+          <div className="loading-sakura sakura-2">
+            🌸
+          </div>
+
+          <div className="loading-sakura sakura-3">
+            🌸
+          </div>
+
+          <div className="loading-icon">
+            🎌
+          </div>
 
           <h1>Kanji Quest</h1>
 
-          <div className="final-kanji">
+          <p className="loading-subtitle">
+            Learn Kanji. Have Fun. 🌸
+          </p>
+
+          <div className="loading-kanji">
             漢字
           </div>
 
-          <p>
-            Loading Kanji... 🌸
+          <div className="loading-circle">
+            <div className="loading-spinner"></div>
+          </div>
+
+          <p className="loading-text">
+            Preparing your Kanji adventure...
           </p>
+
+          <div className="loading-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
         </div>
       </div>
     );
   }
+
+  /* =========================
+     ERROR SCREEN
+  ========================= */
 
   if (error) {
     return (
@@ -248,9 +269,7 @@ function App() {
         <div className="game-card result-card">
           <div className="logo">⚠️</div>
 
-          <h1>
-            Unable to Load Kanji
-          </h1>
+          <h1>Unable to Load Kanji</h1>
 
           <p className="result-message">
             {error}
@@ -258,9 +277,7 @@ function App() {
 
           <button
             className="restart-button"
-            onClick={() =>
-              window.location.reload()
-            }
+            onClick={() => window.location.reload()}
           >
             🔄 Try Again
           </button>
@@ -269,11 +286,18 @@ function App() {
     );
   }
 
+  /* =========================
+     RESULT SCREEN
+  ========================= */
+
   if (gameFinished) {
     return (
       <div className="app">
         <div className="game-card result-card">
-          <div className="logo">🎌</div>
+
+          <div className="logo">
+            🎌
+          </div>
 
           <h1>
             Game Complete! ✨
@@ -286,8 +310,7 @@ function App() {
           <h2>
             {
               levels.find(
-                (item) =>
-                  item.value === level
+                (item) => item.value === level
               )?.label
             }
           </h2>
@@ -318,20 +341,23 @@ function App() {
           >
             🔄 New Game
           </button>
+
         </div>
       </div>
     );
   }
 
-  const question =
-    questions[currentQuestion];
+  const question = questions[currentQuestion];
 
   return (
     <div className="app">
+
       <div className="game-card">
 
         {/* HEADER */}
+
         <div className="header">
+
           <div>
             <div className="logo">
               🌸 Kanji Quest 🌸
@@ -345,15 +371,19 @@ function App() {
           <div className="score-box">
             ⭐ {score}
           </div>
+
         </div>
 
         {/* BEST SCORE */}
+
         <div className="best-score">
           🏆 Best: {bestScore}
         </div>
 
         {/* JLPT LEVEL */}
+
         <div className="level-selector">
+
           <label htmlFor="level">
             Select JLPT Level
           </label>
@@ -362,9 +392,7 @@ function App() {
             id="level"
             value={level}
             onChange={(event) =>
-              changeLevel(
-                event.target.value
-              )
+              changeLevel(event.target.value)
             }
           >
             {levels.map((item) => (
@@ -376,17 +404,20 @@ function App() {
               </option>
             ))}
           </select>
+
         </div>
 
         {/* PROGRESS */}
+
         <div className="progress-section">
+
           <div className="progress-text">
-            Question{" "}
-            {currentQuestion + 1} /{" "}
+            Question {currentQuestion + 1} /{" "}
             {questions.length}
           </div>
 
           <div className="progress-bar">
+
             <div
               className="progress-fill"
               style={{
@@ -397,17 +428,19 @@ function App() {
                 }%`,
               }}
             />
+
           </div>
+
         </div>
 
         {/* STREAK */}
+
         <div
           className={`streak-box ${
-            streak > 0
-              ? "streak-active"
-              : ""
+            streak > 0 ? "streak-active" : ""
           }`}
         >
+
           <span className="streak-label">
             Streak
           </span>
@@ -431,10 +464,13 @@ function App() {
                 : "💖 Nice!"}
             </div>
           )}
+
         </div>
 
         {/* QUESTION */}
+
         <div className="question-section">
+
           <p className="question-label">
             What does this Kanji mean?
           </p>
@@ -449,6 +485,7 @@ function App() {
           </p>
 
           {/* PRONUNCIATION */}
+
           <button
             className="speak-button"
             onClick={speakReading}
@@ -459,54 +496,45 @@ function App() {
           <p className="hint">
             Choose the correct meaning
           </p>
+
         </div>
 
         {/* ANSWERS */}
-        <div className="answers">
-          {question.options.map(
-            (option) => {
-              let buttonClass =
-                "answer-button";
 
-              if (
-                selectedAnswer !== null
-              ) {
-                if (
-                  option ===
-                  question.meaning
-                ) {
-                  buttonClass +=
-                    " correct";
-                } else if (
-                  option ===
-                  selectedAnswer
-                ) {
-                  buttonClass +=
-                    " wrong";
-                }
+        <div className="answers">
+
+          {question.options.map((option) => {
+
+            let buttonClass = "answer-button";
+
+            if (selectedAnswer !== null) {
+
+              if (option === question.meaning) {
+                buttonClass += " correct";
+              } else if (option === selectedAnswer) {
+                buttonClass += " wrong";
               }
 
-              return (
-                <button
-                  key={option}
-                  className={
-                    buttonClass
-                  }
-                  onClick={() =>
-                    handleAnswer(
-                      option
-                    )
-                  }
-                >
-                  {option}
-                </button>
-              );
             }
-          )}
+
+            return (
+              <button
+                key={option}
+                className={buttonClass}
+                onClick={() => handleAnswer(option)}
+              >
+                {option}
+              </button>
+            );
+
+          })}
+
         </div>
 
         {/* FOOTER */}
+
         <div className="footer">
+
           <span>
             📚 JLPT N{level}
           </span>
@@ -514,9 +542,11 @@ function App() {
           <span>
             🔥 Streak: {streak}
           </span>
+
         </div>
 
       </div>
+
     </div>
   );
 }
