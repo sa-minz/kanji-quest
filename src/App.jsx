@@ -66,6 +66,10 @@ function App() {
 
   async function generateGame(list) {
     try {
+      if (!list || list.length < 4) {
+        throw new Error("Not enough Kanji available.");
+      }
+
       const shuffledKanji = shuffle(list);
 
       const selectedKanji = shuffledKanji.slice(
@@ -89,7 +93,8 @@ function App() {
 
           return {
             kanji: character,
-            meaning: data.meanings?.[0] || "Unknown",
+            meaning:
+              data.meanings?.[0] || "Unknown",
             reading:
               data.kun_readings?.[0] ||
               data.on_readings?.[0] ||
@@ -98,25 +103,31 @@ function App() {
         })
       );
 
-      const finalQuestions = questionData.map((question) => {
-        const otherQuestions = questionData.filter(
-          (item) => item.kanji !== question.kanji
-        );
+      const finalQuestions = questionData.map(
+        (question) => {
+          const otherQuestions = questionData.filter(
+            (item) =>
+              item.kanji !== question.kanji &&
+              item.meaning !== question.meaning
+          );
 
-        const wrongAnswers = shuffle(otherQuestions)
-          .slice(0, 3)
-          .map((item) => item.meaning);
+          const wrongAnswers = shuffle(
+            otherQuestions
+          )
+            .slice(0, 3)
+            .map((item) => item.meaning);
 
-        const options = shuffle([
-          question.meaning,
-          ...wrongAnswers,
-        ]);
+          const options = shuffle([
+            question.meaning,
+            ...wrongAnswers,
+          ]);
 
-        return {
-          ...question,
-          options,
-        };
-      });
+          return {
+            ...question,
+            options,
+          };
+        }
+      );
 
       setQuestions(finalQuestions);
     } catch (error) {
@@ -132,6 +143,10 @@ function App() {
 
     const question = questions[currentQuestion];
 
+    if (!question) {
+      return;
+    }
+
     setSelectedAnswer(answer);
 
     if (answer === question.meaning) {
@@ -139,7 +154,9 @@ function App() {
 
       setScore(newScore);
 
-      setStreak((previous) => previous + 1);
+      setStreak(
+        (previous) => previous + 1
+      );
 
       if (newScore > bestScore) {
         setBestScore(newScore);
@@ -154,8 +171,14 @@ function App() {
     }
 
     setTimeout(() => {
-      if (currentQuestion + 1 < questions.length) {
-        setCurrentQuestion((previous) => previous + 1);
+      if (
+        currentQuestion + 1 <
+        questions.length
+      ) {
+        setCurrentQuestion(
+          (previous) => previous + 1
+        );
+
         setSelectedAnswer(null);
       } else {
         setGameFinished(true);
@@ -164,15 +187,17 @@ function App() {
   }
 
   function speakReading() {
-    const question = questions[currentQuestion];
+    const question =
+      questions[currentQuestion];
 
     if (!question?.reading) {
       return;
     }
 
-    const speech = new SpeechSynthesisUtterance(
-      question.reading
-    );
+    const speech =
+      new SpeechSynthesisUtterance(
+        question.reading
+      );
 
     speech.lang = "ja-JP";
     speech.rate = 0.8;
@@ -200,14 +225,12 @@ function App() {
     setSelectedAnswer(null);
     setGameFinished(false);
 
-    await generateGame(kanjiList);
-
-    setLoading(false);
+    try {
+      await generateGame(kanjiList);
+    } finally {
+      setLoading(false);
+    }
   }
-
-  /* =========================
-     LOADING SCREEN
-  ========================= */
 
   if (loading) {
     return (
@@ -230,7 +253,9 @@ function App() {
             🎌
           </div>
 
-          <h1>Kanji Quest</h1>
+          <h1>
+            Kanji Quest
+          </h1>
 
           <p className="loading-subtitle">
             Learn Kanji. Have Fun. 🌸
@@ -259,17 +284,18 @@ function App() {
     );
   }
 
-  /* =========================
-     ERROR SCREEN
-  ========================= */
-
   if (error) {
     return (
       <div className="app">
         <div className="game-card result-card">
-          <div className="logo">⚠️</div>
 
-          <h1>Unable to Load Kanji</h1>
+          <div className="logo">
+            ⚠️
+          </div>
+
+          <h1>
+            Unable to Load Kanji
+          </h1>
 
           <p className="result-message">
             {error}
@@ -277,20 +303,22 @@ function App() {
 
           <button
             className="restart-button"
-            onClick={() => window.location.reload()}
+            onClick={() =>
+              window.location.reload()
+            }
           >
             🔄 Try Again
           </button>
+
         </div>
       </div>
     );
   }
 
-  /* =========================
-     RESULT SCREEN
-  ========================= */
-
-  if (gameFinished) {
+  if (
+    gameFinished &&
+    questions.length > 0
+  ) {
     return (
       <div className="app">
         <div className="game-card result-card">
@@ -310,12 +338,15 @@ function App() {
           <h2>
             {
               levels.find(
-                (item) => item.value === level
+                (item) =>
+                  item.value === level
               )?.label
             }
           </h2>
 
-          <h2>Your Score</h2>
+          <h2>
+            Your Score
+          </h2>
 
           <div className="final-score">
             {score} / {questions.length}
@@ -347,7 +378,28 @@ function App() {
     );
   }
 
-  const question = questions[currentQuestion];
+  const question =
+    questions[currentQuestion];
+
+  if (!question) {
+    return (
+      <div className="loading-screen">
+        <div className="loading-card">
+          <div className="loading-icon">
+            🎌
+          </div>
+
+          <h1>
+            Kanji Quest
+          </h1>
+
+          <p className="loading-text">
+            Preparing questions...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="app">
@@ -355,7 +407,6 @@ function App() {
       <div className="game-card">
 
         {/* HEADER */}
-
         <div className="header">
 
           <div>
@@ -375,13 +426,11 @@ function App() {
         </div>
 
         {/* BEST SCORE */}
-
         <div className="best-score">
           🏆 Best: {bestScore}
         </div>
 
         {/* JLPT LEVEL */}
-
         <div className="level-selector">
 
           <label htmlFor="level">
@@ -392,7 +441,9 @@ function App() {
             id="level"
             value={level}
             onChange={(event) =>
-              changeLevel(event.target.value)
+              changeLevel(
+                event.target.value
+              )
             }
           >
             {levels.map((item) => (
@@ -408,11 +459,11 @@ function App() {
         </div>
 
         {/* PROGRESS */}
-
         <div className="progress-section">
 
           <div className="progress-text">
-            Question {currentQuestion + 1} /{" "}
+            Question{" "}
+            {currentQuestion + 1} /{" "}
             {questions.length}
           </div>
 
@@ -434,10 +485,11 @@ function App() {
         </div>
 
         {/* STREAK */}
-
         <div
           className={`streak-box ${
-            streak > 0 ? "streak-active" : ""
+            streak > 0
+              ? "streak-active"
+              : ""
           }`}
         >
 
@@ -468,7 +520,6 @@ function App() {
         </div>
 
         {/* QUESTION */}
-
         <div className="question-section">
 
           <p className="question-label">
@@ -485,7 +536,6 @@ function App() {
           </p>
 
           {/* PRONUNCIATION */}
-
           <button
             className="speak-button"
             onClick={speakReading}
@@ -500,39 +550,51 @@ function App() {
         </div>
 
         {/* ANSWERS */}
-
         <div className="answers">
 
-          {question.options.map((option) => {
+          {question.options.map(
+            (option) => {
 
-            let buttonClass = "answer-button";
+              let buttonClass =
+                "answer-button";
 
-            if (selectedAnswer !== null) {
+              if (
+                selectedAnswer !== null
+              ) {
 
-              if (option === question.meaning) {
-                buttonClass += " correct";
-              } else if (option === selectedAnswer) {
-                buttonClass += " wrong";
+                if (
+                  option ===
+                  question.meaning
+                ) {
+                  buttonClass +=
+                    " correct";
+                } else if (
+                  option ===
+                  selectedAnswer
+                ) {
+                  buttonClass +=
+                    " wrong";
+                }
+
               }
 
+              return (
+                <button
+                  key={option}
+                  className={buttonClass}
+                  onClick={() =>
+                    handleAnswer(option)
+                  }
+                >
+                  {option}
+                </button>
+              );
             }
-
-            return (
-              <button
-                key={option}
-                className={buttonClass}
-                onClick={() => handleAnswer(option)}
-              >
-                {option}
-              </button>
-            );
-
-          })}
+          )}
 
         </div>
 
         {/* FOOTER */}
-
         <div className="footer">
 
           <span>
