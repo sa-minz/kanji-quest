@@ -166,7 +166,7 @@ Possible future enhancements include:
 
 ---
 
-## 👩‍💻 Developer
+## 👩‍💻 Author
 
 **Savinthi Abeygunawardena**
 
