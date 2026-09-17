@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500;600&family=Nunito:wght@400;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500;600&family=Nunito:wght@400;600;700;800&display=swap");
 
-/* =========================
+/* ==================================================
    GLOBAL
-========================= */
+================================================== */
 
 * {
   box-sizing: border-box;
@@ -11,14 +11,16 @@
 html,
 body,
 #root {
-  margin: 0;
+  width: 100%;
   min-width: 320px;
   min-height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
+  min-height: 100vh;
   margin: 0;
-
   font-family: "Nunito", sans-serif;
 
   background:
@@ -51,15 +53,15 @@ select {
   font: inherit;
 }
 
-/* =========================
+
+/* ==================================================
    MAIN APP
-========================= */
+================================================== */
 
 .app {
   min-height: 100vh;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
@@ -69,6 +71,7 @@ select {
 
   overflow: hidden;
 }
+
 
 /* Decorative flowers */
 
@@ -86,7 +89,11 @@ select {
 
   pointer-events: none;
 
-  animation: floatingDecoration 4s ease-in-out infinite;
+  animation:
+    floatingDecoration
+    4s
+    ease-in-out
+    infinite;
 }
 
 .app::after {
@@ -103,16 +110,21 @@ select {
 
   pointer-events: none;
 
-  animation: floatingDecoration 5s ease-in-out infinite reverse;
+  animation:
+    floatingDecoration
+    5s
+    ease-in-out
+    infinite
+    reverse;
 }
 
-/* =========================
+
+/* ==================================================
    GAME CARD
-========================= */
+================================================== */
 
 .game-card {
   width: 100%;
-
   max-width: 720px;
 
   background: rgba(255, 255, 255, 0.96);
@@ -124,17 +136,21 @@ select {
   padding: 22px 30px 18px;
 
   box-shadow:
-    0 20px 50px rgba(120, 90, 110, 0.10),
+    0 20px 50px rgba(120, 90, 110, 0.1),
     0 4px 15px rgba(120, 90, 110, 0.05);
 
   position: relative;
 
-  animation: cardAppear 0.5s ease;
+  animation:
+    cardAppear
+    0.5s
+    ease;
 }
 
-/* =========================
+
+/* ==================================================
    HEADER
-========================= */
+================================================== */
 
 .header {
   display: flex;
@@ -166,9 +182,10 @@ select {
   font-size: 11px;
 }
 
-/* =========================
+
+/* ==================================================
    SCORE
-========================= */
+================================================== */
 
 .score-box {
   padding: 8px 14px;
@@ -189,9 +206,10 @@ select {
     0 4px 10px rgba(200, 160, 80, 0.08);
 }
 
-/* =========================
+
+/* ==================================================
    BEST SCORE
-========================= */
+================================================== */
 
 .best-score {
   width: fit-content;
@@ -213,9 +231,10 @@ select {
   font-weight: 700;
 }
 
-/* =========================
+
+/* ==================================================
    LEVEL SELECTOR
-========================= */
+================================================== */
 
 .level-selector {
   display: flex;
@@ -264,9 +283,10 @@ select {
     0 0 0 3px rgba(217, 155, 177, 0.12);
 }
 
-/* =========================
+
+/* ==================================================
    PROGRESS
-========================= */
+================================================== */
 
 .progress-section {
   margin: 10px 0 8px;
@@ -299,20 +319,22 @@ select {
 .progress-fill {
   height: 100%;
 
-  background: linear-gradient(
-    90deg,
-    #e9a4b8,
-    #f3c58c
-  );
+  background:
+    linear-gradient(
+      90deg,
+      #e9a4b8,
+      #f3c58c
+    );
 
   border-radius: 20px;
 
   transition: width 0.4s ease;
 }
 
-/* =========================
+
+/* ==================================================
    STREAK
-========================= */
+================================================== */
 
 .streak-box {
   position: relative;
@@ -364,11 +386,17 @@ select {
 }
 
 .streak-active {
-  animation: streakGlow 0.6s ease;
+  animation:
+    streakGlow
+    0.6s
+    ease;
 }
 
 .streak-active .streak-value {
-  animation: fireBounce 0.6s ease;
+  animation:
+    fireBounce
+    0.6s
+    ease;
 }
 
 .streak-pop {
@@ -390,12 +418,17 @@ select {
 
   pointer-events: none;
 
-  animation: streakPop 0.9s ease forwards;
+  animation:
+    streakPop
+    0.9s
+    ease
+    forwards;
 }
 
-/* =========================
+
+/* ==================================================
    QUESTION
-========================= */
+================================================== */
 
 .question-section {
   text-align: center;
@@ -428,7 +461,10 @@ select {
     2px 3px 0 #f8e8ed,
     4px 6px 15px rgba(100, 70, 90, 0.06);
 
-  animation: kanjiAppear 0.35s ease;
+  animation:
+    kanjiAppear
+    0.35s
+    ease;
 }
 
 .hint {
@@ -439,9 +475,10 @@ select {
   font-size: 11px;
 }
 
-/* =========================
+
+/* ==================================================
    LISTEN BUTTON
-========================= */
+================================================== */
 
 .speak-button {
   margin: 7px auto 5px;
@@ -478,20 +515,22 @@ select {
   transform: scale(0.95);
 }
 
-/* =========================
+
+/* ==================================================
    ANSWERS
-========================= */
+================================================== */
 
 .answers {
   display: grid;
 
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns:
+    repeat(2, 1fr);
 
   gap: 10px;
 
   max-width: 600px;
 
-  margin: 12px auto 12px;
+  margin: 12px auto;
 }
 
 .answer-button {
@@ -528,12 +567,13 @@ select {
   background: #fff8fa;
 
   box-shadow:
-    0 5px 14px rgba(170, 120, 140, 0.10);
+    0 5px 14px rgba(170, 120, 140, 0.1);
 }
 
 .answer-button:active {
   transform: scale(0.97);
 }
+
 
 /* Correct */
 
@@ -544,8 +584,12 @@ select {
 
   color: #4e9065;
 
-  animation: correctPop 0.45s ease;
+  animation:
+    correctPop
+    0.45s
+    ease;
 }
+
 
 /* Wrong */
 
@@ -556,12 +600,16 @@ select {
 
   color: #b85f6d;
 
-  animation: wrongShake 0.45s ease;
+  animation:
+    wrongShake
+    0.45s
+    ease;
 }
 
-/* =========================
+
+/* ==================================================
    FOOTER
-========================= */
+================================================== */
 
 .footer {
   display: flex;
@@ -581,9 +629,10 @@ select {
   font-weight: 700;
 }
 
-/* =========================
+
+/* ==================================================
    RESULT SCREEN
-========================= */
+================================================== */
 
 .result-card {
   text-align: center;
@@ -651,9 +700,10 @@ select {
   color: #9b8068;
 }
 
-/* =========================
+
+/* ==================================================
    RESTART BUTTON
-========================= */
+================================================== */
 
 .restart-button {
   border: none;
@@ -662,11 +712,12 @@ select {
 
   border-radius: 18px;
 
-  background: linear-gradient(
-    135deg,
-    #e7a3b8,
-    #f0b987
-  );
+  background:
+    linear-gradient(
+      135deg,
+      #e7a3b8,
+      #f0b987
+    );
 
   color: white;
 
@@ -689,31 +740,43 @@ select {
     0 8px 18px rgba(210, 140, 160, 0.25);
 }
 
+
 /* ==================================================
-   🌸 BEAUTIFUL LOADING SCREEN
+   🌸 LOADING SCREEN
 ================================================== */
 
 .loading-screen {
-  min-height: 100vh;
+  position: fixed;
+
+  inset: 0;
+
+  width: 100vw;
+  height: 100vh;
 
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   padding: 20px;
 
+  margin: 0;
+
   background:
     radial-gradient(
-      circle at 20% 20%,
-      rgba(255, 210, 225, 0.8),
-      transparent 30%
+      circle at 15% 20%,
+      rgba(255, 210, 225, 0.75),
+      transparent 28%
     ),
     radial-gradient(
-      circle at 80% 80%,
-      rgba(255, 225, 180, 0.7),
-      transparent 30%
+      circle at 85% 25%,
+      rgba(255, 239, 200, 0.75),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 80% 85%,
+      rgba(220, 240, 235, 0.65),
+      transparent 28%
     ),
     linear-gradient(
       135deg,
@@ -723,36 +786,51 @@ select {
 
   overflow: hidden;
 
-  position: relative;
+  z-index: 9999;
 }
 
-.loading-card {
-  width: 100%;
 
-  max-width: 470px;
+/* ==================================================
+   LOADING CARD
+================================================== */
+
+.loading-card {
+  width: min(
+    470px,
+    calc(100vw - 40px)
+  );
 
   position: relative;
 
   text-align: center;
 
-  padding: 42px 30px 38px;
+  padding: 40px 30px 36px;
 
-  background: rgba(255, 255, 255, 0.96);
+  margin: 0;
+
+  background:
+    rgba(255, 255, 255, 0.97);
 
   border: 1px solid #f1dce5;
 
   border-radius: 30px;
 
   box-shadow:
-    0 25px 60px rgba(120, 80, 110, 0.12),
-    0 5px 20px rgba(120, 80, 110, 0.06);
+    0 25px 60px rgba(120, 80, 110, 0.14),
+    0 8px 25px rgba(120, 80, 110, 0.07);
 
   overflow: hidden;
 
-  animation: loadingCardIn 0.7s ease;
+  animation:
+    loadingCardIn
+    0.7s
+    ease;
 }
 
-/* Soft decorative circles */
+
+/* ==================================================
+   LOADING DECORATIVE CIRCLES
+================================================== */
 
 .loading-card::before {
   content: "";
@@ -770,6 +848,8 @@ select {
   border-radius: 50%;
 
   opacity: 0.45;
+
+  pointer-events: none;
 }
 
 .loading-card::after {
@@ -788,9 +868,14 @@ select {
   border-radius: 50%;
 
   opacity: 0.45;
+
+  pointer-events: none;
 }
 
-/* Loading icon */
+
+/* ==================================================
+   LOADING ICON
+================================================== */
 
 .loading-icon {
   position: relative;
@@ -803,10 +888,17 @@ select {
 
   margin-bottom: 10px;
 
-  animation: loadingBounce 2s ease-in-out infinite;
+  animation:
+    loadingBounce
+    2s
+    ease-in-out
+    infinite;
 }
 
-/* Loading title */
+
+/* ==================================================
+   LOADING TITLE
+================================================== */
 
 .loading-card h1 {
   position: relative;
@@ -838,7 +930,10 @@ select {
   font-weight: 700;
 }
 
-/* Large Kanji */
+
+/* ==================================================
+   LOADING KANJI
+================================================== */
 
 .loading-kanji {
   position: relative;
@@ -853,16 +948,23 @@ select {
 
   color: #d18aa2;
 
-  margin: 5px 0 20px;
+  margin: 18px 0 22px;
 
   text-shadow:
     3px 4px 0 #f9e5eb,
     0 8px 20px rgba(180, 110, 140, 0.12);
 
-  animation: kanjiFloat 2.5s ease-in-out infinite;
+  animation:
+    kanjiFloat
+    2.5s
+    ease-in-out
+    infinite;
 }
 
-/* Spinner */
+
+/* ==================================================
+   LOADING SPINNER
+================================================== */
 
 .loading-circle {
   position: relative;
@@ -883,7 +985,6 @@ select {
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 }
 
@@ -897,8 +998,17 @@ select {
 
   border-top-color: #d995ac;
 
-  animation: spin 1s linear infinite;
+  animation:
+    spin
+    1s
+    linear
+    infinite;
 }
+
+
+/* ==================================================
+   LOADING TEXT
+================================================== */
 
 .loading-text {
   position: relative;
@@ -914,7 +1024,10 @@ select {
   font-weight: 700;
 }
 
-/* Loading dots */
+
+/* ==================================================
+   LOADING DOTS
+================================================== */
 
 .loading-dots {
   position: relative;
@@ -938,7 +1051,10 @@ select {
 
   background: #e4a1b6;
 
-  animation: loadingDot 1.3s infinite;
+  animation:
+    loadingDot
+    1.3s
+    infinite;
 }
 
 .loading-dots span:nth-child(2) {
@@ -949,7 +1065,10 @@ select {
   animation-delay: 0.4s;
 }
 
-/* Sakura */
+
+/* ==================================================
+   SAKURA
+================================================== */
 
 .loading-sakura {
   position: absolute;
@@ -1004,21 +1123,24 @@ select {
     infinite;
 }
 
-/* =========================
+
+/* ==================================================
    ANIMATIONS
-========================= */
+================================================== */
 
 @keyframes cardAppear {
   from {
     opacity: 0;
 
-    transform: translateY(10px);
+    transform:
+      translateY(10px);
   }
 
   to {
     opacity: 1;
 
-    transform: translateY(0);
+    transform:
+      translateY(0);
   }
 }
 
@@ -1026,47 +1148,56 @@ select {
   from {
     opacity: 0;
 
-    transform: scale(0.8);
+    transform:
+      scale(0.8);
   }
 
   to {
     opacity: 1;
 
-    transform: scale(1);
+    transform:
+      scale(1);
   }
 }
 
 @keyframes floatingDecoration {
   0%,
   100% {
-    transform: translateY(0);
+    transform:
+      translateY(0);
   }
 
   50% {
-    transform: translateY(-10px);
+    transform:
+      translateY(-10px);
   }
 }
 
 @keyframes streakGlow {
   0% {
-    transform: scale(1);
+    transform:
+      scale(1);
   }
 
   40% {
-    transform: scale(1.07);
+    transform:
+      scale(1.07);
 
     box-shadow:
-      0 0 20px rgba(242, 166, 90, 0.4);
+      0 0 20px
+      rgba(242, 166, 90, 0.4);
   }
 
   100% {
-    transform: scale(1);
+    transform:
+      scale(1);
   }
 }
 
 @keyframes fireBounce {
   0% {
-    transform: scale(1);
+    transform:
+      scale(1);
   }
 
   30% {
@@ -1122,37 +1253,45 @@ select {
 
 @keyframes correctPop {
   0% {
-    transform: scale(1);
+    transform:
+      scale(1);
   }
 
   50% {
-    transform: scale(1.04);
+    transform:
+      scale(1.04);
   }
 
   100% {
-    transform: scale(1);
+    transform:
+      scale(1);
   }
 }
 
 @keyframes wrongShake {
   0% {
-    transform: translateX(0);
+    transform:
+      translateX(0);
   }
 
   25% {
-    transform: translateX(-5px);
+    transform:
+      translateX(-5px);
   }
 
   50% {
-    transform: translateX(5px);
+    transform:
+      translateX(5px);
   }
 
   75% {
-    transform: translateX(-3px);
+    transform:
+      translateX(-3px);
   }
 
   100% {
-    transform: translateX(0);
+    transform:
+      translateX(0);
   }
 }
 
@@ -1177,28 +1316,33 @@ select {
 @keyframes loadingBounce {
   0%,
   100% {
-    transform: translateY(0);
+    transform:
+      translateY(0);
   }
 
   50% {
-    transform: translateY(-6px);
+    transform:
+      translateY(-6px);
   }
 }
 
 @keyframes kanjiFloat {
   0%,
   100% {
-    transform: translateY(0);
+    transform:
+      translateY(0);
   }
 
   50% {
-    transform: translateY(-6px);
+    transform:
+      translateY(-6px);
   }
 }
 
 @keyframes spin {
   to {
-    transform: rotate(360deg);
+    transform:
+      rotate(360deg);
   }
 }
 
@@ -1208,13 +1352,15 @@ select {
   100% {
     opacity: 0.25;
 
-    transform: translateY(0);
+    transform:
+      translateY(0);
   }
 
   30% {
     opacity: 1;
 
-    transform: translateY(-4px);
+    transform:
+      translateY(-4px);
   }
 }
 
@@ -1233,9 +1379,10 @@ select {
   }
 }
 
-/* =========================
+
+/* ==================================================
    MOBILE
-========================= */
+================================================== */
 
 @media (max-width: 650px) {
 
@@ -1299,6 +1446,7 @@ select {
     font-size: 42px;
   }
 
+
   /* Loading mobile */
 
   .loading-screen {
@@ -1306,9 +1454,11 @@ select {
   }
 
   .loading-card {
+    width: calc(100vw - 30px);
+
     max-width: 400px;
 
-    padding: 35px 20px 32px;
+    padding: 34px 20px 32px;
 
     border-radius: 25px;
   }
@@ -1328,7 +1478,8 @@ select {
   .loading-kanji {
     font-size: 70px;
 
-    margin-top: 10px;
+    margin:
+      16px 0 20px;
   }
 
   .loading-text {
@@ -1337,5 +1488,72 @@ select {
 
   .loading-sakura {
     font-size: 20px;
+  }
+}
+
+
+/* ==================================================
+   SMALL PHONES
+================================================== */
+
+@media (max-width: 380px) {
+
+  .app {
+    padding: 7px;
+  }
+
+  .game-card {
+    padding: 16px 12px 13px;
+
+    border-radius: 20px;
+  }
+
+  .header {
+    gap: 8px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .header p {
+    font-size: 9px;
+  }
+
+  .score-box {
+    padding: 6px 8px;
+
+    font-size: 12px;
+  }
+
+  .kanji {
+    font-size: 62px;
+  }
+
+  .question-label {
+    font-size: 12px;
+  }
+
+  .answer-button {
+    min-height: 44px;
+
+    padding: 8px 10px;
+
+    font-size: 12px;
+  }
+
+  .loading-card {
+    width: calc(100vw - 24px);
+
+    padding:
+      30px 16px 28px;
+  }
+
+  .loading-card h1 {
+    font-size: 23px;
+  }
+
+  .loading-kanji {
+    font-size: 62px;
   }
 }
